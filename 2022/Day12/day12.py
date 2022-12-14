@@ -10,7 +10,6 @@ import copy
 from collections import defaultdict
 
 
-
 with open('input.txt', 'r') as f:
     A_input = f.read()
 
@@ -97,7 +96,7 @@ while len(unexplored) > 0:
         
 
 endstr = pos_to_str([x_end,y_end])
-print(pathlen(explored[endstr]['path'])-1)
+print('Part 1', pathlen(explored[endstr]['path'])-1)
 
 
 #%%
@@ -121,7 +120,11 @@ plt.colorbar()
 
 
 #%% Par two
-print('Part two takes several minutes!')
+print('Part two takes about two minutes!')
+
+import time
+t0 = time.time()
+
 
 #where are the a?
 a_pos = np.where(A == ord('a'))
@@ -191,6 +194,6 @@ for xx,yy,i in zip(a_pos[0], a_pos[1], range(len(a_pos[0]))):
     except:
         steps.append(np.nan)
 
-print(int(np.nanmin(steps)))    
+print('Part two:', int(np.nanmin(steps)))    
 
-
+print(time.time()-t0)
