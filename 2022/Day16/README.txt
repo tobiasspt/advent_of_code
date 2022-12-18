@@ -1,0 +1,1 @@
+The recursive scripts are faster (or honestly speaking less slow). 
