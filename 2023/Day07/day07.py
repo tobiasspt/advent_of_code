@@ -1,31 +1,18 @@
-
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-
 @author: tobias
 """
 
-import matplotlib.pyplot as plt
 import numpy as np
-import copy
-
 from collections import Counter
 
 with open("input.txt", "r") as f:    
     A = f.read()
     
-# A = """32T3K 765
-# T55J5 684
-# KK677 28
-# KTJJT 220
-# QQQJA 483"""
-
 
 lines = A.split('\n')
 hands = [(x.split()[0], int(x.split()[1])) for x in lines]
-
 
 
 def get_type_code(vals: list[str]):
