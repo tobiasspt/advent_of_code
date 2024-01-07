@@ -12,7 +12,7 @@ map_lines = A.split("\n")
 row_len = len(map_lines[0])
 col_len = len(map_lines)
 
-def rotate_map(map_lines: list[str]):
+def rotate_map(map_lines: list[str]) -> list[str]:
     return  ["".join(x[i] for x in map_lines) for i in range(len(map_lines))]
 
 
@@ -42,7 +42,7 @@ def tilt_east(map_lines: list[str]) -> list[str]:
     return map_lines
 
 
-def total_load(map_lines):
+def total_load(map_lines: list[str])-> int:
     load = 0
     xlen = len(map_lines)
     for i in range(xlen):
@@ -50,18 +50,18 @@ def total_load(map_lines):
     return load
 
 
-def map_hash(map_lines):
+def map_hash(map_lines: list[str]) -> str:
     h = "".join(map_lines)
     return h
 
 
-def calculate_load_from_hash(maphash):
+def calculate_load_from_hash(maphash: str) -> list[str]:
     map_lines = [maphash[idx : idx + col_len] for idx in range(0, len(maphash), col_len)]
     map_lines = rotate_map(map_lines)
     return total_load(map_lines)
 
 
-def print_map(map_lines):
+def print_map(map_lines: list[str]) -> None:
     foo =  ["".join(x[i] for x in map_lines) for i in range(len(map_lines))]
     print()
     for line in foo:

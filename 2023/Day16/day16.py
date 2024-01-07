@@ -14,18 +14,7 @@ xlen = len(mirror_array)
 ylen = len(mirror_array[0])
 
 
-def print_tiles(energized_tiles_set):
-    for x in range(xlen):
-        s = ""
-        for y in range(ylen):
-            if (x,y) in energized_tiles_set:
-                s+= "#"
-            else:
-                s+='.'
-        print(s)
-
-
-def get_next_positions(path):
+def get_next_positions(path: list[int, int, str]) -> list[int, int, str]:
     x, y, direc = path
     new_paths = []
     energized_tiles = set()
@@ -104,10 +93,10 @@ def get_next_positions(path):
     return new_paths, energized_tiles
 
 
-def path_hash(path):
+def path_hash(path: list[int, int, str]) -> str:
     return str(path[0])+','+str(path[1])+","+path[2]
 
-def get_number_of_energized_tiles(initial_path):
+def get_number_of_energized_tiles(initial_path: list[int, int, str]) -> int:
     paths_to_check = [initial_path]
     
     tile_set = set()
@@ -127,9 +116,9 @@ def get_number_of_energized_tiles(initial_path):
         
         
     return len(energized_tiles_set)
-res1 = get_number_of_energized_tiles([0,-1,"r"])
 
-    
+
+res1 = get_number_of_energized_tiles([0,-1,"r"])
 print(f"Solution 1\n{res1}")
         
 
@@ -148,6 +137,29 @@ for y in range(ylen):
     
 print(f"Solution 2\n{max(number_of_energized_tiles)}")
     
+
+"""
+Possible ways to speed up part 2: 
+    Memoryize which tiles will be energyzed, when a beam-splitter is hit from a
+    certain direction. 
+        First just collect the empty tiles and the splitters which are hit. 
+        
+        In a second step combine this then. 
+
+
+"""
+
+
+
+# def print_tiles(energized_tiles_set):
+#     for x in range(xlen):
+#         s = ""
+#         for y in range(ylen):
+#             if (x,y) in energized_tiles_set:
+#                 s+= "#"
+#             else:
+#                 s+='.'
+#         print(s)
     
     
     

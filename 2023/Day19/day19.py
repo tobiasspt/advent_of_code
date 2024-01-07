@@ -38,14 +38,14 @@ for rule in rules.split("\n"):
         
 #### Part 1
 
-def calculate_rating(part):
+def calculate_rating(part: dict) -> int:
     rating = 0
     for value in part.values():
         rating += value
     return rating
 
 
-def handle_rule(part, rule_name):
+def handle_rule(part:dict, rule_name: str) -> int:
     
     if rule_name == "A":
         return calculate_rating(part)
@@ -81,7 +81,7 @@ print(f"Solution 1\n{res1}")
 
 
 
-def handle_range(part_range, rule_name):
+def handle_range(part_range: dict, rule_name: str) -> list[dict]:
     if rule_name == "A":
         return [part_range]
     
@@ -127,10 +127,10 @@ def handle_range(part_range, rule_name):
     return accepted_ranges
 
 
-def calulate_number_of_combinations(part_range):
+def calulate_number_of_combinations(part_range: dict) -> int:
     number_of_ratings = 1
     for rang in part_range.values():
-        s,e = rang
+        s, e = rang
         number_of_ratings *= e-s+1
     return number_of_ratings
         

@@ -1,5 +1,3 @@
-
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -10,7 +8,6 @@ import numpy as np
 
 with open("input.txt", "r") as f:    
     A = f.read()
-
 
 
 def get_xage(universe: np.ndarray, age: int) -> np.ndarray:
@@ -28,8 +25,8 @@ def get_yage(universe: np.ndarray, age: int) -> np.ndarray:
             y_age[:,i] = age -1
     return y_age
 
+
 def total_distances(universe: np.ndarray, age: int) -> int:
-    
     x_age = get_xage(universe, age)
     y_age = get_yage(universe, age)
     

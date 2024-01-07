@@ -2,64 +2,13 @@
 """
 Created on Tue Dec  5 15:15:20 2023
 
-Problems to solve:
-    Are the ranges correct? -> do they overlapp?
-    Do I have ranges which are going into minus (assert thing?)
-   
-    
-   !!! CHeck if the mapping causes duplicates!!!
-   
-   TO avoid the error with assertation, the equal of the ranges need to be 
-   checked carefully!
-
-
-    
 @author: spitaler.t
 """
 
 import copy
 
 with open("input.txt", "r") as f:    
-    A_input = f.read()
-
-
-A_test = """seeds: 79 14 55 13
-
-seed-to-soil map:
-50 98 2
-52 50 48
-
-soil-to-fertilizer map:
-0 15 37
-37 52 2
-39 0 15
-
-fertilizer-to-water map:
-49 53 8
-0 11 42
-42 0 7
-57 7 4
-
-water-to-light map:
-88 18 7
-18 25 70
-
-light-to-temperature map:
-45 77 23
-81 45 19
-68 64 13
-
-temperature-to-humidity map:
-0 69 1
-1 0 69
-
-humidity-to-location map:
-60 56 37
-56 93 4
-"""
-
-A = A_test
-A = A_input
+    A = f.read()
 
 
 blocks = A.split("\n\n")
@@ -80,7 +29,7 @@ for block in blocks[1:]:
 
 
 # destination, source, length
-def get_mapped_value(source_name, source_val):
+def get_mapped_value(source_name: str, source_val: int) -> int:
     ranges = mapping_dict[source_name]["ranges"]
     for r in ranges:
         dest_start, source_start, length = r
@@ -103,7 +52,7 @@ print(f"Solution 1:\n{min(location_list)}")
 
 #%% Part 2
 
-def has_overlap(range1: list[int, int], range2: list[int, int]):
+def has_overlap(range1: list[int, int], range2: list[int, int]) -> bool:
     s1, e1 = range1
     s2, e2 = range2
     if s1 > e2 or e1 < s2: # no overlapp
@@ -112,13 +61,12 @@ def has_overlap(range1: list[int, int], range2: list[int, int]):
         return True
     
     
-def get_overlapping_region_of_two_ranges(current_range, check_range):
+def get_overlapping_region_of_two_ranges(current_range: list[int, int], check_range: list[int, int]) -> (list[list[int,int]], list[int,int]):
     """
     The ranges do have already an overlap
     """
     cs, ce = current_range
     ms, me = check_range
-
 
     assert cs <= ce
     assert ms <= me
@@ -199,8 +147,7 @@ def transfer_all_ranges(source_name: str, ranges_list: list[list[int,int]]) -> l
         
 
 
-
-def move_ranges_through_categories(current_ranges_list):
+def move_ranges_through_categories(current_ranges_list: list[list[int,int]]) -> list[list[int,int]]:
     for cat in categories:
         current_ranges_list = transfer_all_ranges(cat, current_ranges_list)        
     return current_ranges_list

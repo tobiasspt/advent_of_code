@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-
 @author: tobias
 """
 
-import matplotlib.pyplot as plt
 import numpy as np
-import copy
 import time
 
 with open("input.txt", "r") as f:    
@@ -15,12 +12,12 @@ with open("input.txt", "r") as f:
     
 
 
-def is_valid_arrangement(springs:str, groups):
+def is_valid_arrangement(springs: str, groups: list[int]) -> bool:
     groups_now = [len(y) for y in [x for x in springs.split(".") if x != ""]]
     return groups_now == groups
 
 
-def springs_can_be_valid(springs, groups):
+def springs_can_be_valid(springs: str, groups: list[int]) -> bool:
     num_defect_total = sum(groups)
     num_defect_known = springs.count("#")
     num_defect_extra = springs.count("?")
@@ -32,15 +29,13 @@ def springs_can_be_valid(springs, groups):
     
     
     
-def clean_known_part(springs, groups):
-    
+def clean_known_part(springs: str, groups: list[int]) -> tuple[bool, str, list[int]]:
     springs = springs.strip('.')
     
     if not springs_can_be_valid(springs, groups):
         return False, None, None
     
     springs_len = len(springs)
-    
     
     # No more unknowns inside
     if springs.count("?") == 0:
@@ -52,7 +47,6 @@ def clean_known_part(springs, groups):
     
 
     while springs[0] == "#":
-
         group_len = groups[0]
         part = springs[:group_len]
         
@@ -81,16 +75,13 @@ def clean_known_part(springs, groups):
 
 
 
-def replace_one_unknown(springs):
-    
+def replace_one_unknown(springs: str):
     indexes = np.where(np.array(list(springs)) == "?")[0] 
     string_lists = [springs.replace("?", ".")]
 
     for i in indexes:
-        
         foo = springs[:i]
         foo = foo.replace("?", ".")
-        
         s = foo + "#" + springs[i+1:]
         string_lists.append(s)
         
@@ -100,12 +91,12 @@ def replace_one_unknown(springs):
 """
 My onw approach to memoization / caching
 """
-def generate_hash(springs, groups):
+def generate_hash(springs: str, groups: list[int]) -> str:
     return springs + str(groups)
-dict_of_doom = {}
+dict_of_doom = {} #Somehow I came up with this name after struggeling for some time
 
 
-def count_arrangements(springs, groups):
+def count_arrangements(springs: str, groups: list[int]) -> int:
     counter = 0
     
     # Remove the known part, once at the front and once at the back
@@ -120,18 +111,15 @@ def count_arrangements(springs, groups):
             springs = springs[::-1]
             groups = groups[::-1]
     
-    
     # My own implementation of memoization. Could be done using functools.cache
     doom_hash = generate_hash(springs, groups)
     if doom_hash in dict_of_doom:
         return dict_of_doom[doom_hash]
     
-    
     # The arrangment was valid: 
     if sum(groups) == 0 and springs.count("#") == 0:
         dict_of_doom[doom_hash] = counter +1
         return counter + 1
-    
     
     # After the removement of the known part, the springs string does start with a "?"
     # Get the possible next states of when one "?" is replaced with a "." or "#"
@@ -142,7 +130,7 @@ def count_arrangements(springs, groups):
     dict_of_doom[doom_hash] = counter 
     return counter
 
-
+#%%
 
 # Read and parse the input
 spring_rows = A.split("\n")
@@ -167,7 +155,6 @@ print(f"Solution 1\n{res1}")
 
 
 ### Part 2
-to = time.time()
 factor = 5
 for i, row in enumerate(spring_rows):
     springs, groups = row.split()
@@ -182,7 +169,6 @@ for row in row_dict.keys():
     groups = row_dict[row]["gr"]
     nums2.append(count_arrangements(springs, groups))
 res2 = sum(nums2)
-print(f"Solution 1\n{res2}")
+print(f"Solution 2\n{res2}")
 
-print(time.time()-to)
 

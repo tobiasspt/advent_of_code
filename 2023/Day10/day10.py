@@ -12,7 +12,7 @@ First index defines north and south. hihger x is further south
 Second index defines east and west. higher y is further east
 """
 
-def can_connect(pos1, pos2):
+def can_connect(pos1: tuple[int,int], pos2: tuple[int,int]) -> bool:
     xs, ys = pos1
     xn, yn = pos2
     testp = map_array[xn,yn]
@@ -131,7 +131,7 @@ for connection in blocked_connections:
 
 
         
-def get_neighbours(pos: tuple[int]):
+def get_neighbours(pos: tuple[int, int]) -> list[tuple[int,int]]:
     x, y = pos
     neighs = set([(x+1, y), (x-1, y), (x, y+1), (x, y-1)])
     neighs = [neigh for neigh in neighs if neigh[0] >= 0 and neigh[0] <= map2.shape[0]-1]
@@ -139,7 +139,7 @@ def get_neighbours(pos: tuple[int]):
     return neighs
     
 
-def leads_outside(pos):
+def leads_outside(pos: tuple[int, int]) -> bool:
     x, y = pos
     if x <= 0 or x >= map2.shape[0]-1:
         return True

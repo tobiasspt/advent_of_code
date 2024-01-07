@@ -15,7 +15,7 @@ y is the second index
 """
 
 
-def get_neighbours(num):
+def get_neighbours(num: str) -> set[tuple[int, int]]:
     index, length, y = number_dict[num]
     neighbours = set()
     neighbours.add((index-1, y))
@@ -31,7 +31,6 @@ number_dict = {}
 symbol_set = set()
 gear_set = set()
 
-counter = 0
 
 for y, line in enumerate(lines):
     ix = 0

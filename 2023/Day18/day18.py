@@ -8,14 +8,14 @@ with open("input.txt", "r") as f:
     A = f.read()
 
 
-def edge_length(corners):
+def edge_length(corners: list[tuple[int,int]]) -> int:
     length = 0
     for i in range(len(corners)-1):
         length += abs(corners[i][0] - corners[i+1][0]) + abs(corners[i][1] - corners[i+1][1])
     return length
     
 
-def polygon_area(corners):
+def polygon_area(corners: list[tuple[int,int]]) -> int:
     "Shoelace formula"
     area = 0
     for i in range(len(corners)-1):

@@ -10,12 +10,10 @@ import copy
 with open("input.txt", "r") as f:    
     A = f.read()
 
-
 patterns_list = A.split("\n\n")
 patterns_list = [np.array([list(line) for line in pattern.split("\n")]) for pattern in patterns_list]
 
-
-def start_and_end(a, length):
+def start_and_end(a: int, length: int) -> (int, int):
     
     if a < length/2:
         first_start = 0
@@ -29,7 +27,6 @@ def start_and_end(a, length):
 
 
 def vertical_reflection(pattern: np.array) -> int:
-    
     y_len = pattern.shape[1]
     for y in range(1, y_len):
         first_start, last_end = start_and_end(y, y_len)
@@ -41,7 +38,6 @@ def vertical_reflection(pattern: np.array) -> int:
 
 
 def horizontal_reflection(pattern: np.array) -> int:
-    
     x_len = pattern.shape[0]
     for x in range(1, x_len):
         first_start, last_end = start_and_end(x, x_len)
@@ -79,12 +75,10 @@ print(f"Solution 1\n{res1}")
 #%% Part 2
 
 def vertical_reflection_2(i: int, pattern: np.array) -> int:
-    
     y_len = pattern.shape[1]
     for y in range(1, y_len):
         if pattern_dict[i] == ["v", y]:
             continue
-        
         first_start, last_end = start_and_end(y, y_len)
         if np.all(pattern[:,first_start:y] == pattern[:, y:last_end][:,::-1]):
             return y
@@ -94,12 +88,10 @@ def vertical_reflection_2(i: int, pattern: np.array) -> int:
 
 
 def horizontal_reflection_2(i: int, pattern: np.array) -> int:
-    
     x_len = pattern.shape[0]
     for x in range(1, x_len):
         if pattern_dict[i] == ["h", x]:
             continue
-        
         first_start, last_end = start_and_end(x, x_len)
         if np.all(pattern[first_start:x,:] == pattern[x:last_end][::-1,:]):
             return x
@@ -110,7 +102,6 @@ def horizontal_reflection_2(i: int, pattern: np.array) -> int:
 
 
 def pattern_smudge(i: int, pattern: np.array) -> (int, int):
-    
     for x in range(pattern.shape[0]):
         for y in range(pattern.shape[1]): 
             new_pattern = copy.copy(pattern)
@@ -120,7 +111,6 @@ def pattern_smudge(i: int, pattern: np.array) -> (int, int):
                 
             elif pattern[x,y] == "#":
                 new_pattern[x,y] = "."
-    
 
             vref = vertical_reflection_2(i, new_pattern)
             href = horizontal_reflection_2(i, new_pattern)

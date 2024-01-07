@@ -37,7 +37,7 @@ print(f"Solution 1\n{steps}")
 
 """
 A short examination shows, that each start node always ends up in the same end node.
-A further examination shows, that the occurance of ending at an end tile is periodic
+A further examination shows, that the occurance of ending at an "end tile" is periodic
 with allways the same time-difference. 
 """
 
@@ -68,7 +68,7 @@ for pos in nodes_dict.keys():
 keys = list(start_dict_A.keys())
 
 
-def find_common_times(times1, times2):
+def find_common_times(times1: int, times2: int) -> list[int, int]:
     
     delta1 = times1[1] - times1[0]
     delta2 = times2[1] - times2[0]    
@@ -76,34 +76,26 @@ def find_common_times(times1, times2):
     if delta1 >= delta2:
         start = times1[0]
         delta = delta1
-        
         checkstart = times2[0]
         checkdelta = delta2
         
-        
     elif delta2 > delta1:
-        
         start = times2[0]
         delta = delta2
-        
         checkstart = times1[0]
         checkdelta = delta1
         
     else: # The ranges have the same time step
         return 
     
-    
     new_range = []
-    
     counter = 0
     while len(new_range) < 2:
-
         guess = start + counter*delta
         counter += 1
-
         if not (guess-checkstart)%checkdelta:
             new_range.append(guess)
-            
+        
     return new_range
 
         

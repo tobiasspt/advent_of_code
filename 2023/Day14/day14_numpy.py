@@ -10,7 +10,7 @@ with open("input.txt", "r") as f:
     A = f.read()
 maparray_input = np.array([list(line) for line in A.split("\n")]) 
 
-def total_load(map_array):
+def total_load(map_array) -> int:
     load = 0
     xlen = map_array.shape[0]
     for i in range(xlen):
@@ -50,17 +50,17 @@ def tilt_east(map_array: np.array) -> np.array:
 def tilt_cycle(map_array: np.array) -> np.array:
     return tilt_east(tilt_south(tilt_west(tilt_north(map_array))))
 
-def print_array(map_array):
+def print_array(map_array: np.array) -> None:
     print()
     for x in range(map_array.shape[0]):
         print("".join(map_array[x,:]))
         
-def map_hash(map_array):
+def map_hash(map_array: np.array) -> str:
     x, y = np.where(map_array=="O")
     h = ",".join([str(i) for i in x]) + "|" + ",".join([str(i) for i in y])
     return h
 
-def calculate_load_from_hash(maphash):
+def calculate_load_from_hash(maphash: str) -> int:
     load = 0
     xposis = np.array([int(x) for x in maphash.split("|")[0].split(",")])
     xlen = maparray_input.shape[0]

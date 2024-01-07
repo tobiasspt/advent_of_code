@@ -4,6 +4,10 @@
 @author: tobias
 """
 
+"""
+Yes I know, part 2 can be done with maths!
+"""
+
 with open("input.txt", "r") as f:    
     A = f.read()
 
@@ -12,24 +16,17 @@ duration_list = [int(x) for x in lines[0].split(":")[1].split()]
 distances = [int(x) for x in lines[1].split(":")[1].split()]
 
 
-def calculate_distance(holding_time, duration):
+def calculate_distance(holding_time: int, duration: int) -> int:
     return holding_time *(duration - holding_time)
     
     
 error_margins = []
-
 for duration, record in zip(duration_list, distances):
-    
-    
     error_margin = 0
-    
     for holding_time in range(0, duration+1):
-        
         distance = calculate_distance(holding_time, duration)
-        
         if distance > record:
             error_margin += 1
-
     error_margins.append(error_margin)
     
 res1 = 1
@@ -40,29 +37,25 @@ print(f"Solution 1\n{res1}")
     
 #%% Part 2
 
-
 duration = int("".join(lines[0].split(":")[1].split()))
 record = int("".join(lines[1].split(":")[1].split()))
 
-
 error_margin = 0
-
 for holding_time in range(0, duration+1):
-    
     distance = calculate_distance(holding_time, duration)
     
     if distance > record:
         error_margin += 1
         
     if not holding_time % 10000000:
-        print("completed:", holding_time/duration)
+        print("completed:", round(holding_time/duration,2)*100, "%" )
 print(f"Solution 1\n{error_margin}")
 
 #%% Part 2 fast
 
 # find lower limit
 
-def is_better(holding_time):
+def is_better(holding_time: int) -> bool:
     distance = calculate_distance(holding_time, duration)
     if distance > record:
         return 1
@@ -95,7 +88,7 @@ while True:
 range_start = min_yes
 
 
-# find highe limit
+# find higher limit
 min_not = ht3
 max_yes = ht2
 while True: 
