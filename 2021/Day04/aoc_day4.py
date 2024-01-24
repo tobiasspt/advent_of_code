@@ -3,7 +3,10 @@ import numpy as np
 import copy
 
 #manual copying of input
-nums = np.array([42,44,71,26,70,92,77,45,6,18,79,54,31,34,64,32,16,55,81,11,90,10,21,87,0,84,8,23,1,12,60,20,57,68,61,82,49,59,22,2,63,33,50,39,28,30,88,41,69,72,98,73,7,65,53,35,96,67,36,4,51,75,24,86,97,85,66,29,74,40,93,58,9,62,95,91,80,99,14,19,43,37,27,56,94,25,83,48,17,38,78,15,52,76,5,13,46,89,47,3])
+
+with open("input.txt") as f:
+    A = f.read()
+nums = np.array(A.split("\n\n")[0].split(","), dtype=float)
 
 
 
@@ -14,9 +17,12 @@ list_of_bingos = []
 #function for reading the bingo boards
 current_board = -1
 
-with open ('day4_input.txt') as file:
+with open ('input.txt') as file:
     
     line = file.readline()
+    line = file.readline()
+
+    
     while line:
         
         if line =='\n':

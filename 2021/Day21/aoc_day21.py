@@ -5,13 +5,17 @@ Created on Tue Dec 21 10:42:15 2021
 @author: spitaler.t
 """
 
-import numpy as np
 
-#player 1 starts at 10
-#player 2 starts at 1
 
-pos1 = 10
-pos2 = 1
+with open("input.txt") as f:
+    A = f.read()
+    
+pos1 = int(A.split("\n")[0].split(":")[1])
+pos2 = int(A.split("\n")[1].split(":")[1])
+
+
+
+
 score1 = 0
 score2 = 0
 

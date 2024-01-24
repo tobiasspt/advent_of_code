@@ -7,10 +7,12 @@ Created on Tue Dec 14 08:45:15 2021
 
 import numpy as np
 
-temp = 'VFHKKOKKCPBONFHNPHPN'
 
 with open('input.txt','r') as f:
     A = f.read()
+
+temp, A  = A.split("\n\n")
+
 
 
 

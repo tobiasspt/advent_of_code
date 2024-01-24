@@ -27,8 +27,14 @@ for i in range(len(three_throws)):
 
 #part two of aoc day 21
 
-p1 = 10# 4
-p2 = 1 # 8
+
+with open("input.txt") as f:
+    A = f.read()
+    
+p1 = int(A.split("\n")[0].split(":")[1])
+p2 = int(A.split("\n")[1].split(":")[1])
+
+
 
 s1 = 0
 s2 = 0

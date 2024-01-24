@@ -14,7 +14,7 @@ import numpy as np
 lines = {}
 counter = 0
 
-with open ('day5_input.txt') as file:
+with open ('input.txt') as file:
     line = file.readline().strip()
 
     while line and (line != ''):

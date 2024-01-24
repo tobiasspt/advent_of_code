@@ -12,7 +12,7 @@ score = 0
 score2 = []
 
 
-with open('day10_input.txt') as f:
+with open('input.txt') as f:
     
     line = f.readline()
     while line:

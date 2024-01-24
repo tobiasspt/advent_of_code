@@ -7,14 +7,6 @@ Created on Thu Dec 23 13:46:21 2021
 
 import numpy as np
 
-"""
-#############
-#...........#
-###B#B#D#A###
-  #D#C#A#C#
-  #########
-"""
-
 
 def print_burrow(let):
     

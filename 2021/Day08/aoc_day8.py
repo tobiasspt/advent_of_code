@@ -14,7 +14,7 @@ n8 =0
 
 
 c = 0
-with open('day8_input.txt') as file:
+with open('input.txt') as file:
     
     line = file.readline()
     
@@ -46,7 +46,7 @@ print(res)
     
 sum = 0
 
-with open('day8_input.txt') as file:
+with open('input.txt') as file:
     
     line = file.readline()
     

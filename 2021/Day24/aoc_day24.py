@@ -11,7 +11,7 @@ z_div = []
 x_add = []
 y_add = []
 
-f = open('day24_input.txt','r')
+f = open('input.txt','r')
 
 for j in range(14):
     for i in range(18):

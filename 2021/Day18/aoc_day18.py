@@ -192,7 +192,7 @@ def calculate_magnitude(l):
 
 #After setting up the functions, I can finally do the adding and reducing
 
-file = 'day18_input.txt'
+file = 'input.txt'
 
 with open(file) as f:
     
@@ -214,7 +214,7 @@ print(calculate_magnitude(l))
 #Question 2
 #Largest magnitude of any two snailfish numbers
 
-file = 'day18_input.txt'
+file = 'input.txt'
 
 number_list = []
 

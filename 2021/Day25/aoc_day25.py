@@ -7,7 +7,7 @@ Created on Mon Dec 27 17:35:07 2021
 
 import numpy as np
 
-file = 'day25_input.txt'
+file = 'input.txt'
 
 
 A_input = np.zeros([137,139], dtype='str')

@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 grid = np.zeros([100,100])
 
-with open('day9_input.txt') as file:
+with open('input.txt') as file:
     for i in range(100):
         line = file.readline()
         grid[i,:] = list(line.split()[0])

@@ -10,7 +10,7 @@ import time
 t0 = time.time()
 
 # second part of the riddle ...
-file = 'day22_input.txt'
+file = 'input.txt'
 
 
 #the maximum boundaries of the input

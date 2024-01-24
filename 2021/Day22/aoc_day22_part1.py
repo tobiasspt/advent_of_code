@@ -11,7 +11,7 @@ A = np.zeros([101,101,101])
 
 s = 50
 
-file = 'day22_input.txt'
+file = 'input.txt'
 
 line = ' '
 with open(file) as f:

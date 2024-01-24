@@ -7,7 +7,7 @@ Created on Wed Dec 15 07:42:41 2021
 
 import numpy as np
 
-file = 'day15_input.txt'
+file = 'input.txt'
 
 with open (file) as f:
     line = f.readline()

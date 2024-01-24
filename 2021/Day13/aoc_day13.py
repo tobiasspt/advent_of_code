@@ -8,24 +8,14 @@ Created on Mon Dec 13 07:22:34 2021
 import numpy as np
 
 
-A = np.loadtxt('day13_input.txt',delimiter = ',')
-# A = np.loadtxt('foo.txt',delimiter = ',')
+with open("input.txt") as f:
+    
+    inpt = f.read()
+    
+A, B = inpt.split("\n\n")
 
+A = np.array([[int(x.split(",")[0]), int(x.split(",")[1])] for x in A.split("\n")])
 
-B = """
-fold along x=655
-fold along y=447
-fold along x=327
-fold along y=223
-fold along x=163
-fold along y=111
-fold along x=81
-fold along y=55
-fold along x=40
-fold along y=27
-fold along y=13
-fold along y=6
-"""
 
 #%%
 #Concentrate only on the first fold, how many are there points left? 

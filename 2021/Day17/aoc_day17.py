@@ -5,10 +5,18 @@ Created on Fri Dec 17 07:08:59 2021
 @author: spitaler.t
 """
 
-import numpy as np
 
-#Input
-xmin = 257; xmax = 286; ymin = -101; ymax = -57
+with open("input.txt") as f:
+    A = f.read()
+    
+nums = A.split()[2:]
+
+xnums = [int(x) for x in nums[0].split("=")[1].strip(",").split("..")]
+ynums = [int(x) for x in nums[1].split("=")[1].strip(",").split("..")]
+
+xmin, xmax = xnums
+ymin, ymax = ynums
+
 
 
 #%%
