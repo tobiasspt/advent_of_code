@@ -5,7 +5,6 @@
 """
 
 import numpy as np
-import time
 
 with open("input.txt", "r") as f:    
     A = f.read()
