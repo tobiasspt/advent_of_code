@@ -3,163 +3,173 @@
 """
 @author: tobias
 """
-### Solution works, but is rather slow")
+from collections import deque
 
-with open("input.txt", "r") as f:    
-    A = f.read()
+"""
+directions:
+0 = up
+1 = right
+2 = down
+3 = left
+"""
+def get_next_ways(nx: int, ny: int, direc: int, mirror: str) -> list[tuple[int,int,int]]:
+    if direc == 0: ## up
+        if mirror == "|":
+            next_ways = [(nx,ny,0)]
+        elif mirror == "-":
+            next_ways = [(nx,ny,1), (nx,ny,3)]
+        elif mirror == "/":
+            next_ways = [(nx,ny,1)]
+        elif mirror == "\\":
+            next_ways = [(nx,ny,3)]
+            
+    elif direc == 2: ## down
+        if mirror == "|":
+            next_ways = [(nx,ny,2)]
+        elif mirror == "-":
+            next_ways = [(nx,ny,1), (nx,ny,3)]
+        elif mirror == "/":
+            next_ways = [(nx,ny,3)]
+        elif mirror == "\\":
+            next_ways = [(nx,ny,1)]
+            
+    elif direc == 1: ## right
+        if mirror == "|":
+            next_ways = [(nx,ny,0), (nx,ny,2)]
+        elif mirror == "-":
+            next_ways = [(nx,ny,1)]
+        elif mirror == "/":
+            next_ways = [(nx,ny,0)]
+        elif mirror == "\\":
+            next_ways = [(nx,ny,2)]
+
+    elif direc == 3: ## left
+        if mirror == "|":
+            next_ways = [(nx,ny,0), (nx,ny,2)]
+        elif mirror == "-":
+            next_ways = [(nx,ny,3)]
+        elif mirror == "/":
+            next_ways = [(nx,ny,2)]
+        elif mirror == "\\":
+            next_ways = [(nx,ny,0)]   
+
+    return next_ways
 
 
-mirror_array = [list(line) for line in A.split("\n")]
-xlen = len(mirror_array)
-ylen = len(mirror_array[0])
 
 
-def get_next_positions(path: list[int, int, str]) -> list[int, int, str]:
-    x, y, direc = path
-    new_paths = []
-    energized_tiles = set()
-    if direc == "r":
-        newy = y+1
-        if newy >= ylen:
-            return [], set()
-        next_tile =  mirror_array[x][newy]
-        energized_tiles.add((x, newy))
-        
-        if next_tile in ["-","."]:
-            new_paths.append([x, newy, "r"])
-        elif next_tile == "/":
-            new_paths.append([x, newy, "u"])
-        elif next_tile == "\\":
-            new_paths.append([x, newy, "d"])
-        elif next_tile == "|":
-            new_paths += [[x, newy, "u"],[x, newy, "d"]]
-
-
-    elif direc == "l":
-        newy = y-1
-        if newy < 0 :
-            return [], set()
-        next_tile =  mirror_array[x][newy]
-        energized_tiles.add((x, newy))
-        
-        if next_tile in ["-","."]:
-            new_paths.append([x, newy, "l"])
-        elif next_tile == "/":
-            new_paths.append([x, newy, "d"])
-        elif next_tile == "\\":
-            new_paths.append([x, newy, "u"])
-        elif next_tile == "|":
-            new_paths += [[x, newy, "u"],[x, newy, "d"]]
-
-
-    elif direc == "d":
-        newx = x+1
-        if newx >= xlen:
-            return [], set()
-        next_tile =  mirror_array[newx][y]
-        energized_tiles.add((newx, y))
-        
-        if next_tile in ["|","."]:
-            new_paths.append([newx, y, "d"])
-        elif next_tile == "/":
-            new_paths.append([newx, y, "l"])
-        elif next_tile == "\\":
-            new_paths.append([newx, y, "r"])
-        elif next_tile == "-":
-            new_paths += [[newx, y, "l"],[newx, y, "r"]]
-
+pos_to_pos_dict = {}
+def position_to_position(sx: int, sy: int, sdirec: int, mirror_array: list[list[str]]) -> list[tuple[int,int]]:
+    # From any place to a mirror or to the outside.
+    # There might be more than one end-place (beam_split).
+    # Function returns:
+    # - the tiles which are energyzed (including the start tile)
+    # - the outgoing directions
     
-    elif direc == "u":
-        newx = x-1
-        if newx < 0:
-            return [], set()
-        next_tile =  mirror_array[newx][y]
-        energized_tiles.add((newx, y))
+    x = sx
+    y = sy
+    direc = sdirec
+    
+    ## The results of the function are memorized
+    if (x,y,direc) in pos_to_pos_dict.keys():
+        return pos_to_pos_dict[(sx,sy,sdirec)]["next_ways"], pos_to_pos_dict[(x,y,direc)]["energized_tiles"]
+    
+    if x>=0 and x< len(mirror_array[0]) and y>=0 and y< len(mirror_array):
+        pos_energyzed = [(x,y)]
+    else:
+        pos_energyzed = []
+    
+    while True: ## moving till mirror or outside
+      
+        #moving to next tile
+        if direc == 0:
+            ny = y - 1
+            nx = x
+        elif direc == 1:
+            ny = y
+            nx = x + 1     
+        elif direc == 2:
+            ny = y + 1
+            nx = x              
+        elif direc == 3:
+            ny = y
+            nx = x - 1     
+    
+        ## left the area
+        if nx < 0 or nx >= len(mirror_array[0]):
+            next_ways = []
+            pos_to_pos_dict[(sx,sy,sdirec)] = {"next_ways": next_ways, "energized_tiles": pos_energyzed}
+            return next_ways, pos_energyzed
+        if ny < 0 or ny >= len(mirror_array):
+            next_ways = []
+            pos_to_pos_dict[(sx,sy,sdirec)] = {"next_ways": next_ways, "energized_tiles": pos_energyzed}
+            return next_ways, pos_energyzed
         
-        if next_tile in ["|","."]:
-            new_paths.append([newx, y, "u"])
-        elif next_tile == "/":
-            new_paths.append([newx, y, "r"])
-        elif next_tile == "\\":
-            new_paths.append([newx, y, "l"])
-        elif next_tile == "-":
-            new_paths += [[newx, y, "l"],[newx, y, "r"]]
-
+        # the tile tried is a mirror! 
+        if mirror_array[ny][nx] != ".":
+            ## do the mirror magic
+            mirror = mirror_array[ny][nx]
+            next_ways =  get_next_ways(nx, ny, direc, mirror)
+            pos_to_pos_dict[(x,y,direc)] = {"next_ways": next_ways, "energized_tiles": pos_energyzed}
+            return next_ways, pos_energyzed
+            
+        ## continue walking
+        x = nx
+        y = ny
+        pos_energyzed.append((nx,ny))
     
-    new_paths = [path for path in new_paths if path[0] >=0 and path[0] < xlen]
-    new_paths = [path for path in new_paths if path[1] >=0 and path[1] < ylen]
-    energized_tiles = energized_tiles.union(set([(x[0],x[1]) for x in new_paths]))
-
-    return new_paths, energized_tiles
-
-
-def path_hash(path: list[int, int, str]) -> str:
-    return str(path[0])+','+str(path[1])+","+path[2]
-
-def get_number_of_energized_tiles(initial_path: list[int, int, str]) -> int:
-    paths_to_check = [initial_path]
     
-    tile_set = set()
-    energized_tiles_set = set()
+
+def get_energized_tiles(start: tuple[int,int,int], mirror_array: list[list[str]]) -> list[tuple[int,int]]:
     
-    while len(paths_to_check) > 0:
-        path = paths_to_check[0]
-        paths_to_check.remove(path)
-        if path_hash(path) in tile_set:
+    handeled_positions = []
+    next_ways_stack = deque([start])
+    energized_tiles = []
+    
+    while len(next_ways_stack) > 0:
+        nn = next_ways_stack.pop()
+        if nn in handeled_positions:
             continue
         else:
-            tile_set.add(path_hash(path))
-        new_paths, energized_tiles = get_next_positions(path)
-
-        energized_tiles_set = energized_tiles_set.union(energized_tiles)
-        paths_to_check += new_paths
+            handeled_positions.append(nn)
         
+        x,y,direc = nn
+        new_ways, new_et = position_to_position(x, y, direc, mirror_array)
+        energized_tiles += new_et
         
-    return len(energized_tiles_set)
+        for nw in new_ways:
+            if nw not in handeled_positions:
+                next_ways_stack.append(nw)
+    
+    ## all done. exit from llop and return
+    return set(energized_tiles)
 
 
-res1 = get_number_of_energized_tiles([0,-1,"r"])
-print(f"Solution 1\n{res1}")
-        
+### input reading
+with open("input.txt", "r") as f:    
+    A = f.read()
+mirror_array = [list(line) for line in A.split("\n")]
+ylen = len(mirror_array)
+xlen = len(mirror_array[0])
 
-###  Part 2
+
+### part 1
+energyzed_tiles = get_energized_tiles((-1,0,1), mirror_array)
+res1 = len(energyzed_tiles)
+print("Solution 1:", res1)
+
+
+###  part 2
 number_of_energized_tiles = []
-
-for x in range(xlen):
-    n1 = get_number_of_energized_tiles([x, -1, "r"])
-    n2 = get_number_of_energized_tiles([x, ylen, "l"])
-    number_of_energized_tiles += [n1,n2]
-    
 for y in range(ylen):
-    n1 = get_number_of_energized_tiles([-1, y, "d"])
-    n2 = get_number_of_energized_tiles([xlen, y, "u"])
+    n1 = len(get_energized_tiles([-1, y, 1], mirror_array))
+    n2 = len(get_energized_tiles([xlen, y, 3], mirror_array))
     number_of_energized_tiles += [n1,n2]
-    
-print(f"Solution 2\n{max(number_of_energized_tiles)}")
-    
+for x in range(xlen):
+    n1 = len(get_energized_tiles([x, -1, 2], mirror_array))
+    n2 = len(get_energized_tiles([x, ylen, 0], mirror_array))
+    number_of_energized_tiles += [n1,n2]
+print(f"Solution 2: {max(number_of_energized_tiles)}")
 
-"""
-Possible ways to speed up part 2: 
-    Memoryize which tiles will be energyzed, when a beam-splitter is hit from a
-    certain direction. 
-        First just collect the empty tiles and the splitters which are hit. 
-        
-        In a second step combine this then. 
-
-
-"""
-
-
-
-# def print_tiles(energized_tiles_set):
-#     for x in range(xlen):
-#         s = ""
-#         for y in range(ylen):
-#             if (x,y) in energized_tiles_set:
-#                 s+= "#"
-#             else:
-#                 s+='.'
-#         print(s)
-    
     
     

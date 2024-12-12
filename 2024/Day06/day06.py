@@ -4,6 +4,14 @@
 @author: tobias
 """
 
+"""
+directions:
+0 = up
+1 = right
+2 = down
+3 = left
+"""
+
 obstacle_to_obstacle_dict = {}
 def move_to_next_obstacle(x: int, y: int, direc: int, area: list[list[int]], save: bool=True) -> tuple[tuple[int,int,int], list[tuple[int,int]]]:
     ## We memorize the tiles between obstacles in the dictionary  obstacle_to_obstacle_dict 
