@@ -3,3 +3,4 @@ aoc_tools/build
 aoc_tools/dist
 aoc_tools/aoc_tools.egg-info
 **__pycache__**
+_norton_
